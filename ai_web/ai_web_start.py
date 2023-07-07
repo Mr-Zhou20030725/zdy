@@ -1,6 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import tts as tts
-from   ai_web.websocker import  WebSocketServer
+from   websocker import  WebSocketServer
 HOST_NAME = 'localhost'
 PORT_NUMBER = 8000
 

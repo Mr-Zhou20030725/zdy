@@ -171,7 +171,7 @@ setInterval(function () {
       console.log("last_char: " + last_char);
       console.log("last_emoji: " + last_emoji);
       //减少输出卡了之后出现的回复一半的问题，至少回复是个整句，这样出错的概率大大减小，也可以调快定时器频率
-      if (['。', '.', '?', '!', '？', '！', '>', '}'].includes(last_char)
+      if (['。', '.', '?', '!', '？', '！', '>', '}',']'].includes(last_char) 
         || ['😉', '😊', '🙏', '😍', '😎', '😢', '😡'].includes(last_emoji)) {
         sendMessage(cur_message);
         console.log("发送给用户的信息:" + cur_message);

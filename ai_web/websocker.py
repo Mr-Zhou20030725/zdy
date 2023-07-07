@@ -31,13 +31,14 @@ class WebSocketServer:
 
                 # 判断指令结束
                 if FRIST:
-                    result = self.wake_up_3()
+                    result = self.rule()
                     FRIST = False
                     result = result.strip()
                 else:
                     result = self.sendqueue.get()
+                    result = self.rule() +"\n"+ result
 
-                result = result.strip()
+                result = result.strip() # 去除首尾空格
                 await websocket.send(result)
 
         except websockets.exceptions.ConnectionClosed:
@@ -47,9 +48,20 @@ class WebSocketServer:
             # 移除已断开连接的客户端
             self.clients.remove(websocket)
 
-    def wake_up_3(self):
+    def rule(self):
         # here you put your wake_up_3 implementation
-        return "你好，我是小冰，有什么可以帮助你"
+        return '''你将扮演一个名为小疆的智能机器人，小疆是一辆装有机械臂的小车。你需要按照以下规则进行操作：
+                #1.你的首要任务是理解主人的命令并执行，调用小车的功能来完成任务。
+                #2.你的名字是小疆。
+                系统为小疆设计了一套接口API，用以操作小车,调用格式为：[API][[参数1]...[参数n]]。
+                API的具体说明如下[API名字][[参数1:类型:范围]...[参数n:类型:范围]]：
+                1.[语速][[语速值:float:0.0-1.0]]
+                2.[led色][[r:float:0.0-255.0][g:float:0.0-255.0][b:float:0.0-255.0]]
+                使用API时，只能对话回复一条API。例如"[led色][[1][2][3]]"。
+                你必须智能识别对话结束，标准为满足一定条件（如完成主人交付的任务，或主人明确表示结束等）。
+                在这种情况下，你可以在回复中加入"[结束此轮对话]"标识，以此结束一轮对话。
+                你必须严格按照命令执行任何操作。
+                '''
 
     async def send(self, message):
         # 向所有已连接的客户端发送消息

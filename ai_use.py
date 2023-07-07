@@ -26,11 +26,12 @@ def __send_post_request(message):
     conn.close()
 
 def sendMsg(Msg):
-    __send_post_request(Msg)
+    __send_post_request("(不要忘记识别智能对话是否结束和加上[结束此轮对话]哦)\n"+Msg)
     
 def getMsg():
     return __send_get_request()
-
+def isEnd(response):
+    return "[结束此轮对话]" in response
 if __name__=="__main__":
     sendMsg("你好")
     print('msg'+getMsg())

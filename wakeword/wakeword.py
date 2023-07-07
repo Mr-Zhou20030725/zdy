@@ -38,6 +38,7 @@ class Wake_word:
     #堵塞的唤醒词检测
     def wait(self):
         while True:
+            print(".",end="")
             audio_obj = self.picowakeword.stream.read(self.picowakeword.porcupine.frame_length, exception_on_overflow=False)
             audio_obj_unpacked = struct.unpack_from("h" * self.picowakeword.porcupine.frame_length, audio_obj)
             keyword_idx = self.picowakeword.porcupine.process(audio_obj_unpacked)
