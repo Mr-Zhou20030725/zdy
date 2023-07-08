@@ -1,6 +1,6 @@
 import re
 import zdy.config_db as db
-
+import zdy.task.task as task
 
 class API:
     def __init__(self):
@@ -8,7 +8,8 @@ class API:
         self.__api_dict={
             'get':{
             '语速':self.db.get_speech_speed,
-            'led颜色':self.db.get_led_color
+            'led颜色':self.db.get_led_color,
+            '电源':task.get_power
             },
             'set':{
             '语速':self.db.set_speech_speed,
@@ -70,6 +71,7 @@ class API:
         }
         try:
         # 调用API
+        #param 是返回值
             param = self.__api_dict[operation][api_name](*parameters)
             print(param)
         except Exception as e:
@@ -79,6 +81,8 @@ class API:
         result = '成功:'+str(param) if response['is_success'] else '失败:'+str(param)
         response['result'] = result
         return response
+    #return response: {'is_success':True,'result':None} 
+    
     def do_api(self,api):
         import concurrent.futures
         with concurrent.futures.ThreadPoolExecutor() as executor:
