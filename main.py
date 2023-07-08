@@ -18,7 +18,7 @@ def main():
     
     while True:
         if wakeword.wait(): #唤醒词检测
-            # led.breath_led()#呼吸灯
+            led.breath_led()#呼吸灯
             print("唤醒成功")
             word = listen.speech_to_text()
             if word == "" or len(word) <= 1:
@@ -35,7 +35,7 @@ def main():
                 msg = ai_use.getMsg()
                 tts.voice(msg)
             print("对话结束")
-            # led.blue_led()
+            led.blue_led()
                     
                                 
                 
