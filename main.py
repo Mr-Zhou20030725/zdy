@@ -10,9 +10,11 @@ import zdy.speechModule.speech2test as speech2test #导入语音识别模块
 import zdy.wakeword.wakeword as Wakeword    #导入wakeword模块
 import zdy.task.led as led  #导入led模块
 import subprocess
+import zdy.api 
 def main():
     wakeword = Wakeword.Wake_word() #唤醒词检测
     listen = speech2test.BaiduASR() #语音识别
+    api = zdy.api.API() #api
     #启动大模型
     subprocess.Popen("python  d:\\越疆\DobotLab\\resources\\dobotlink\\resources\\dobotlink-win\\tool\py38\\Lib\\zdy\\ai_web\\ai_web_start.py",shell=True)
     
@@ -25,6 +27,13 @@ def main():
                 continue
             ai_use.sendMsg("嗨小疆"+word)
             msg = ai_use.getMsg()
+            if api.is_api_call(msg):#判断是否是api调用
+                res = api.do_api(msg)
+                if res['is_success']:
+                    ai_use.sendMsg(res['result'])
+                else:
+                    ai_use.sendMsg('失败')
+                msg = ai_use.getMsg()
             tts.voice(msg)
             #开启多轮对话
             while not ai_use.isEnd(msg):
@@ -33,13 +42,16 @@ def main():
                     break
                 ai_use.sendMsg(word)
                 msg = ai_use.getMsg()
+                if api.is_api_call(msg):#判断是否是api调用
+                    res = api.do_api(msg)
+                    if res['is_success']:
+                        ai_use.sendMsg(res['result'])
+                    else:
+                        ai_use.sendMsg('失败')
+                    msg = ai_use.getMsg()
                 tts.voice(msg)
             print("对话结束")
             led.blue_led()
                     
-                                
-                
-                
-                
 if __name__ == '__main__':
     main()

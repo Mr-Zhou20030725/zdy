@@ -2,8 +2,8 @@ import sqlite3
 
 class ConfigDB:
     def __init__(self):
-        self.db_file = "db_file.db"
-        self.connection = sqlite3.connect(self.db_file)
+        self.db_file = "d:\\越疆\\DobotLab\\resources\\dobotlink\\resources\\dobotlink-win\\tool\\py38\\Lib\\zdy\\db_file.db"
+        self.connection = sqlite3.connect(self.db_file, check_same_thread=False)
         self.cursor = self.connection.cursor()
         self.create_table()
     def delete_table(self):
@@ -58,6 +58,7 @@ class ConfigDB:
             color = self.cursor.fetchone()
             return color[0] if color else None
         except Exception as e:
+            print(e)
             return None
         
     def get_speech_speed(self):
@@ -68,16 +69,20 @@ class ConfigDB:
         try:
             self.cursor.execute(query)
             speed = self.cursor.fetchone()
+            print(speed)
             return speed[0] if speed else None
         except Exception as e:
+            print(e)
             return None
 
     def close_connection(self):
         self.connection.close()
+    def __del__(self):
+        self.close_connection()
 
 # 使用示例
 if __name__ == '__main__':
     db = ConfigDB()
     # 设置配置
-    # db.set_led_color("{'r':100,'g':0,'b':0}")
+    db.set_led_color("{'r':100,'g':0,'b':0}")
     # db.set_speech_speed(0.5)    
