@@ -12,7 +12,7 @@ class base:
         go.set_move_dist(x, y, Vx, Vy)
     def round(self, v, r, angle,mode):#半径圆弧
         go.set_running_mode(mode)#安全模式
-        go.set_arc_cent(velocity=, x=-100, y=100, angle=90, mode=1)
+        # go.set_arc_cent(velocity= x=-100, y=100, angle=90, mode=1)
     def rotate(self,r,vr,mode):#旋转
         go.set_running_mode(mode)
         go.set_rotate(r,vr)

@@ -5,7 +5,7 @@ import socketserver
 from threading import Condition, Thread
 from http import server
 res = [(1280, 720), (640, 480), (320, 240),(960, 540)]
-res_mode = 0
+res_mode = 1
 fps = 30
 PAGE=f"""\
 <html>

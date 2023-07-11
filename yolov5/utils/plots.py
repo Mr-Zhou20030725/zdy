@@ -97,6 +97,10 @@ class Annotator:
                      box[1] + 1 if outside else box[1] + h + 1),
                     fill=color,
                 )
+                center =p1[0] + w / 2, p1[1] + h / 2 # center of text
+                #draw center of text
+                
+                
                 # self.draw.text((box[0], box[1]), label, fill=txt_color, font=self.font, anchor='ls')  # for PIL>8.0
                 self.draw.text((box[0], box[1] - h if outside else box[1]), label, fill=txt_color, font=self.font)
         else:  # cv2
@@ -108,6 +112,9 @@ class Annotator:
                 outside = p1[1] - h >= 3
                 p2 = p1[0] + w, p1[1] - h - 3 if outside else p1[1] + h + 3
                 cv2.rectangle(self.im, p1, p2, color, -1, cv2.LINE_AA)  # filled
+                center = p1[0] + self.lw, p1[1] - self.lw if outside else p1[1] + h + self.lw  # text center
+                # center point
+                cv2.circle(self.im, center=center, radius=self.lw, color=color, thickness=-1, lineType=cv2.LINE_AA)
                 cv2.putText(self.im,
                             label, (p1[0], p1[1] - 2 if outside else p1[1] + h + 2),
                             0,

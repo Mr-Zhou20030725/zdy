@@ -1,5 +1,5 @@
 from DobotEDU import *
-import led
+import zdy.task.led as led
 from zdy.tts import voice
 def get_power():#电源
     led.white_led()
@@ -30,7 +30,7 @@ def playcat():
     beta_go.grab_obj( 1)
     voice("喵 喵喵")
     ###
-def 
+# def ssss
 
 
 

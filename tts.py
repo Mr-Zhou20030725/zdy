@@ -4,6 +4,7 @@ import subprocess
 from aiohttp import TCPConnector
 import edge_tts
 
+
 VOICE = "zh-CN-XiaoyiNeural"
 TEXT = ""
 OUTPUT_FILE = ""
@@ -57,6 +58,8 @@ def __voice(text):
     cmd_noproxy = "edge-tts --voice "+VOICE+" --text \""+TEXT+"\" --write-media "+OUTPUT_FILE
     os.system(cmd)
     try:
+        import zdy.audio.audio_sender as audio_sender
+        audio_sender.send_audio(OUTPUT_FILE)
         from playsound import playsound
         playsound(OUTPUT_FILE)
     except:
@@ -76,5 +79,7 @@ def voice(TEXT):
 
 if __name__ == "__main__":
     voice(
-        '''老毕等你很久了，你终于来了'''
+        '''
+        你好
+        '''
     )
