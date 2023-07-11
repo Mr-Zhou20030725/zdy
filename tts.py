@@ -3,11 +3,10 @@ import pygame
 import subprocess
 from aiohttp import TCPConnector
 import edge_tts
-import zdy.api
+
 VOICE = "zh-CN-XiaoyiNeural"
 TEXT = ""
 OUTPUT_FILE = ""
-api = zdy.api.API() #api
 
 async def _main() -> None:
     global TEXT
@@ -29,10 +28,15 @@ def play_audio_with_pygame(audio_file_path):
 
 
 def __voice(text):
-    # try:
-    res = api.do_api("[get][语速]")
-    voice_speed = float(res['result'][3:])
-    voice_speed = int(voice_speed*100)
+    try:
+        import zdy.api
+        api = zdy.api.API() #api
+
+        res = api.do_api("[get][语速]")
+        voice_speed = float(res['result'][3:])
+        voice_speed = int(voice_speed*100)
+    except:
+        voice_speed = 10
     if voice_speed < 0:
         voice_speed = "="+str(voice_speed) + "%"
     else:
@@ -59,7 +63,7 @@ def __voice(text):
         play_audio_with_pygame(OUTPUT_FILE)
     # del
     import os
-    os.remove(OUTPUT_FILE)
+    # os.remove(OUTPUT_FILE)
 
     # except:
     print("语音完成")
