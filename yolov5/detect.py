@@ -80,9 +80,12 @@ def run(
         dnn=False,  # use OpenCV DNN for ONNX inference
         vid_stride=1,  # video frame-rate stride
 ):
-    #打开socker
-    print("等待连接")
-    print("连接成功")
+    # #打开socker
+    # sk = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # print("等待连接")
+    # server_address = ('localhost', 6000)  # 将这个地址替换为你的服务器地址和端口
+    # sk.connect(server_address)
+    # print("连接成功")
     
     source = str(source)
     save_img = not nosave and not source.endswith('.txt')  # save inference images
@@ -167,8 +170,11 @@ def run(
                 print("检测到物体--------------")
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
+                    # data = {"coordinates": [x.item() for x in xyxy], "object": names[int(cls)],'center':[(xyxy[0].item()+xyxy[2].item())/2,(xyxy[1].item()+xyxy[3].item())/2],"img_size":im.shape[2:]}
 
-                    
+                    # message = json.dumps(data)
+                    # sk.sendall(message.encode('utf-8'))
+        
                     if save_txt:  # Write to file
                         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
                         line = (cls, *xywh, conf) if save_conf else (cls, *xywh)  # label format

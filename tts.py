@@ -59,7 +59,7 @@ def __voice(text):
     os.system(cmd)
     try:
         import zdy.audio.audio_sender as audio_sender
-        audio_sender.send_audio(OUTPUT_FILE)
+        # audio_sender.send_audio(OUTPUT_FILE)
         from playsound import playsound
         playsound(OUTPUT_FILE)
     except:
